@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
+import java.lang.Long;
 import java.net.*;
 
 public class LiaisonClient {
@@ -15,10 +16,10 @@ public class LiaisonClient {
     private static OutputStream osBackLog;
 
 
-    public void nextpaquet(byte[] paquet){
+/*    public void nextpaquet(byte[] paquet){
 
         //Sert a avoir la longueur en bytes du paquet
-        byte[] longueur = BigInteger.valueOf(paquet.length).toByteArray();             //À changer la ligne
+        byte[] longueur = BigInteger.valueOf(paquet.length).toByteArray();             //Changer la ligne
 
         //Sert à mettre le paquet original avec sa longueur pour creer un en-tete
         byte[] EnTete = new byte[longueur.length + paquet.length];
@@ -35,7 +36,27 @@ public class LiaisonClient {
         System.arraycopy(EnTete, 0, EnTete2, 0, EnTete.length);
         System.arraycopy(bytes, 0, EnTete2, EnTete.length, bytes.length);
 
+    }*/
+
+    public void nextpaquetS(String paquet){
+
+        //Sert a avoir la longueur en string du paquet
+        String longueur = BigInteger.valueOf(paquet.length()).toString();             //Changer la ligne
+
+        //Sert à mettre le paquet original avec sa longueur pour creer un en-tete
+        String EnTete = cat(longueur, paquet);
+
+        //Sert à faire la fonction du CRC32, return un long
+        long EnTeteReussiOuPas = getCRC32Checksum(EnTete.getBytes());
+        //Transform le long precedent en String
+        String bytes = String.valueOf(EnTeteReussiOuPas);
+
+        //On met la reponse du CRC32 avec l'en-tete deja fait
+        String EnTete2 = cat(EnTete,bytes);
+
     }
+
+
 
     public static long getCRC32Checksum(byte[] bytes) {
         Checksum crc32 = new CRC32();
@@ -52,7 +73,10 @@ public class LiaisonClient {
    }
 
 
-
+    String cat(String a, String b) {
+        a += b;
+        return a;
+    }
 
 
 
