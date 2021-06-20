@@ -7,12 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationClient {
-    /**
-     * Open and read a file, and return the lines in the file as a list
-     * of Strings.
-     * (Demonstrates Java FileReader, BufferedReader, and Java5.)
-     */
-    private String readFile(String filename)
+
+
+    public boolean readFile(String filename)
     {
         String records = new String();
         try
@@ -24,17 +21,20 @@ public class ApplicationClient {
                 records.concat(line);
             }
             reader.close();
-            return records;
+            TransportClient transportClient = new TransportClient();
+            transportClient.EnTeteLisible(filename);
+            return true;
         }
         catch (Exception e)
         {
             System.err.format("Exception occurred trying to read '%s'.", filename);
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
 
     public String nomFile(File filename){
         return filename.getName();
     }
+            return records;
 }

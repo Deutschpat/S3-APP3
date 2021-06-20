@@ -20,9 +20,13 @@ public class QuoteClient {
         DatagramSocket socket = new DatagramSocket();
 
         // send request
+        ApplicationClient applicationClient = new ApplicationClient();
+        applicationClient.readFile("one-liners.txt");
+
+
         byte[] buf = new byte[256];
         InetAddress address = InetAddress.getByName(args[0]);
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4445);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
         socket.send(packet);
 
         // get response

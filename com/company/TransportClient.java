@@ -5,8 +5,33 @@ import java.util.*;
 
 
 public class TransportClient {
+
+    byte[] EnTete = null;
+
+    public void creationEntete(String filename)
+    {
+        EnTete = new byte[filename.getBytes().length];
+
+
+    }
+
+    //Sert à faire la fonction du CRC32, return un long
+    long EnTeteReussiOuPas = getCRC32Checksum(EnTete);
+    //Transform le long precedent en bytes
+    byte[] bytes = ByteBuffer.allocate(Long.SIZE / Byte.SIZE).putLong(EnTeteReussiOuPas).array();
+
+    //On met la reponse du CRC32 avec l'en-tete deja fait
+    byte[] EnTete2 = new byte[EnTete.length + bytes.length];
+        System.arraycopy(EnTete, 0, EnTete2, 0, EnTete.length);
+        System.arraycopy(bytes, 0, EnTete2, EnTete.length, bytes.length);
+
+
+
+
+
     File f;
 
+    String nonRepertoire = null;
 
     public void transport(String records, File fichier) {
         byte[] bytes = records.getBytes();
