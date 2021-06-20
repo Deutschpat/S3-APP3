@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -8,7 +9,8 @@ public class TransportClient {
     File f;
 
 
-    public void transport(String records, File fichier) {
+    public void transport(String records, File fichier) throws IOException {
+        LiaisonClient l = new LiaisonClient();
         byte[] bytes = records.getBytes();
         byte[][] hey = divideArray(bytes,200);
 
@@ -16,7 +18,9 @@ public class TransportClient {
         fichier.getName();
 
         //2.
-        EnTeteLisible(hey);
+        String hey2 = EnTeteLisible(hey);
+
+        l.nextpaquetS(hey2);
     }
 
     public static byte[][] divideArray(byte[] source, int chunksize) {
