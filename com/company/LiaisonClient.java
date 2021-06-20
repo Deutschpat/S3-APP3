@@ -58,6 +58,7 @@ public class LiaisonClient {
         //On met la reponse du CRC32 avec l'en-tete deja fait
         String EnTete2 = cat(paquet,bytes);
 
+        //On l'envoie à qui?
     }
 
 
