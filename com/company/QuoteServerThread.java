@@ -17,7 +17,7 @@ public class QuoteServerThread extends Thread {
 
     public QuoteServerThread(String name) throws IOException {
         super(name);
-        socket = new DatagramSocket(4445);
+        socket = new DatagramSocket(25500);
 
         try {
             in = new BufferedReader(new FileReader("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\one-liners.txt"));
@@ -30,10 +30,10 @@ public class QuoteServerThread extends Thread {
 
         while (moreQuotes) {
             try {
-                byte[] buf = new byte[256];
+                byte[] dataReceived = new byte[256];
 
                 // receive request
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                DatagramPacket packet = new DatagramPacket(dataReceived, dataReceived.length);
                 socket.receive(packet);
 
                 // figure out response
@@ -43,12 +43,12 @@ public class QuoteServerThread extends Thread {
                 else
                     dString = getNextQuote();
 
-                buf = dString.getBytes();
+                dataReceived = dString.getBytes();
 
                 // send the response to the client at "address" and "port"
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
-                packet = new DatagramPacket(buf, buf.length, address, port);
+                packet = new DatagramPacket(dataReceived, dataReceived.length, address, port);
                 socket.send(packet);
             } catch (IOException e) {
                 e.printStackTrace();
