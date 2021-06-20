@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
@@ -13,7 +15,8 @@ import java.net.*;
 public class LiaisonClient {
     String test = "test";
     byte[] bytes = test.getBytes();
-    private static OutputStream osBackLog;
+    private static OutputStream BackLog;
+    private static File log;
 
 
 /*    public void nextpaquet(byte[] paquet){
@@ -38,21 +41,22 @@ public class LiaisonClient {
 
     }*/
 
-    public void nextpaquetS(String paquet){
+    public void nextpaquetS(String paquet) throws IOException {
 
         //Sert a avoir la longueur en string du paquet
-        String longueur = BigInteger.valueOf(paquet.length()).toString();             //Changer la ligne
+       // String longueur = BigInteger.valueOf(paquet.length()).toString();             //Changer la ligne
+        backlog("Reception du packet.");
 
         //Sert à mettre le paquet original avec sa longueur pour creer un en-tete
-        String EnTete = cat(longueur, paquet);
+       // String EnTete = cat(longueur, paquet);
 
         //Sert à faire la fonction du CRC32, return un long
-        long EnTeteReussiOuPas = getCRC32Checksum(EnTete.getBytes());
+        long EnTeteReussiOuPas = getCRC32Checksum(paquet.getBytes());
         //Transform le long precedent en String
         String bytes = String.valueOf(EnTeteReussiOuPas);
 
         //On met la reponse du CRC32 avec l'en-tete deja fait
-        String EnTete2 = cat(EnTete,bytes);
+        String EnTete2 = cat(paquet,bytes);
 
     }
 
@@ -65,11 +69,14 @@ public class LiaisonClient {
     }
 
     private synchronized static void backlog(String msg) throws IOException {
-        osBackLog.write(("[" +
+        log = new File("liaisonDeDonnees.log");
+        BackLog = new FileOutputStream(log,true);
+
+        BackLog.write(("[" +
                 new Timestamp(System.currentTimeMillis()).toString().substring(11,21) +
                 "] [Serveur] : ").getBytes());
-        osBackLog.write(msg.trim().getBytes());
-        osBackLog.write(10);
+        BackLog.write(msg.trim().getBytes());
+        BackLog.write(10);
    }
 
 
