@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6973dda6-356a-42b8-aa36-4484aebe5b14" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/com/company/ApplicationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/ApplicationClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/QuoteClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/QuoteClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/QuoteServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/QuoteServerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/TransportClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/TransportClient.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1uBS35yrIuAE4vOSPBaZ8p8JPce" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.company" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.company.QuoteClient" />
+      <module name="S3-APP3" />
+      <option name="PROGRAM_PARAMETERS" value="DESKTOP-DOE4SA1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Serveur" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.company.QuoteServer" />
+      <module name="S3-APP3" />
+      <option name="PROGRAM_PARAMETERS" value="DESKTOP-DOE4SA1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Serveur" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6973dda6-356a-42b8-aa36-4484aebe5b14" name="Default Changelist" comment="" />
+      <created>1624137286664</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1624137286664</updated>
+      <workItem from="1624137287979" duration="1754000" />
+      <workItem from="1624139974739" duration="986000" />
+      <workItem from="1624201264435" duration="6154000" />
+      <workItem from="1624210594869" duration="8014000" />
+      <workItem from="1624219836732" duration="4317000" />
+      <workItem from="1624224677116" duration="15000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
