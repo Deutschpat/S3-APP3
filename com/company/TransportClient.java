@@ -70,18 +70,18 @@ public class TransportClient<EnTete, EnTete2> {
         int cnp = CalculerNombrePackets(message.getBytes());
         String List[] = new String[cnp];
         int debut = 0;
-        int fin = 199;
-        for(int i=0; i<cnp; i++){
+        //int fin = 199;
+        for(int i=0; i==cnp-1; i++){
             if(i==cnp-1){
-                debut = i*200;
+                debut = (i)*200;
                 List[i] = new String(message.getBytes(), debut, message.getBytes().length%200);
                 System.out.println(debut);
                 System.out.println(i);
                 System.out.println(List[i]);
             }
             else{
-                debut = i*200;
-                List[i] = new String(message.getBytes(), debut, 200 + debut );
+                debut = (i)*200;
+                List[i] = new String(message.getBytes(), debut, 200 );
                 System.out.println(debut);
                 System.out.println(i);
                 System.out.println(List[i]);
