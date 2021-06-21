@@ -33,6 +33,10 @@ public class ApplicationClient {
             System.out.println(records);
             reader.close();
 
+
+            TransportClient transportClient = new TransportClient();
+            transportClient.MessageFragmenteEnBytes(records.toString());
+
             //Preparation de transmission vers le serveur
             DatagramSocket socket = new DatagramSocket();
             byte[] buf = records.toString().getBytes();
@@ -40,8 +44,6 @@ public class ApplicationClient {
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
             socket.send(packet);
 
-            //TransportClient transportClient = new TransportClient();
-            //transportClient.transport(records, filename);
             return;
         }
         catch (Exception e)

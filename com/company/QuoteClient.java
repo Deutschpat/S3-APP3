@@ -14,7 +14,6 @@ public class QuoteClient {
         DatagramSocket socket = new DatagramSocket();
         // send request
         ApplicationClient applicationClient = new ApplicationClient();
-        System.out.println("lol1");
         applicationClient.readFile("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\one-liners.txt", args);
 
 /*        // get response
@@ -31,6 +30,12 @@ public class QuoteClient {
         byte[] b = new byte[6000];
         int test1 = tc.CalculerNombrePackets(b);
         System.out.println(test1);*/
+
+/*        byte[] b = new byte[6000];
+        String c = b.toString();
+        TransportClient tc = new TransportClient();
+        String[] mfeb =tc.MessageFragmenteEnBytes(c);
+        //System.out.println(mfeb);*/
     }
 
 }
