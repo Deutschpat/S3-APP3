@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="6973dda6-356a-42b8-aa36-4484aebe5b14" name="Default Changelist" comment="">
+    <list default="true" id="1ca9ebd1-0e45-4f49-8289-b565ccb5ef37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/com/company/ApplicationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/ApplicationClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/company/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/company/QuoteClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/QuoteClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/company/QuoteServerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/QuoteServerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/com/company/TransportClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/TransportClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,15 +13,31 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1uBS35yrIuAE4vOSPBaZ8p8JPce" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1uAkuzmW4eXqdzLwxNg0wL2o6Sh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="JavaClassFindUsagesOptions.isSearchForTextOccurrences" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -31,53 +47,63 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
   </component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.company" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.Client">
-    <configuration name="Client" type="Application" factoryName="Application">
+  <component name="RunManager">
+    <configuration name="QuoteClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.company.QuoteClient" />
       <module name="S3-APP3" />
-      <option name="PROGRAM_PARAMETERS" value="DESKTOP-DOE4SA1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.company.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Serveur" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.company.QuoteServer" />
-      <module name="S3-APP3" />
-      <option name="PROGRAM_PARAMETERS" value="DESKTOP-DOE4SA1" />
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Serveur" />
-    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.QuoteClient" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6973dda6-356a-42b8-aa36-4484aebe5b14" name="Default Changelist" comment="" />
-      <created>1624137286664</created>
+      <changelist id="1ca9ebd1-0e45-4f49-8289-b565ccb5ef37" name="Default Changelist" comment="" />
+      <created>1624116007853</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1624137286664</updated>
-      <workItem from="1624137287979" duration="1754000" />
-      <workItem from="1624139974739" duration="986000" />
-      <workItem from="1624201264435" duration="6154000" />
-      <workItem from="1624210594869" duration="8014000" />
-      <workItem from="1624219836732" duration="4317000" />
-      <workItem from="1624224677116" duration="15000" />
+      <updated>1624116007853</updated>
+      <workItem from="1624116009418" duration="35839000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

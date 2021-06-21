@@ -18,17 +18,11 @@ public class QuoteServerThread extends Thread {
     public QuoteServerThread(String name) throws IOException {
         super(name);
         socket = new DatagramSocket(25500);
-
-        try {
-            in = new BufferedReader(new FileReader("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\one-liners.txt"));
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not open quote file. Serving time instead.");
-        }
     }
 
     public void run() {
 
-        while (moreQuotes) {
+
             try {
                 byte[] dataReceived = new byte[256];
 
@@ -36,12 +30,15 @@ public class QuoteServerThread extends Thread {
                 DatagramPacket packet = new DatagramPacket(dataReceived, dataReceived.length);
                 socket.receive(packet);
 
+                //Adapter le packet en String
+                String received = new String(packet.getData(), 0, packet.getLength());
+                System.out.println(received);
                 // figure out response
                 String dString = null;
                 if (in == null)
                     dString = new Date().toString();
                 else
-                    dString = getNextQuote();
+                    //dString = getNextQuote();
 
                 dataReceived = dString.getBytes();
 
@@ -54,11 +51,11 @@ public class QuoteServerThread extends Thread {
                 e.printStackTrace();
                 moreQuotes = false;
             }
-        }
+
         socket.close();
     }
 
-    protected String getNextQuote() {
+/*    protected String getNextQuote() {
         String returnValue = null;
         try {
             if ((returnValue = in.readLine()) == null) {
@@ -70,7 +67,7 @@ public class QuoteServerThread extends Thread {
             returnValue = "IOException occurred in server.";
         }
         return returnValue;
-    }
+    }*/
 }
 
 

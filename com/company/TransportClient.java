@@ -2,29 +2,32 @@ package com.company;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.*;
+import java.lang.*;
 
 
-public class TransportClient {
+public class TransportClient<EnTete, EnTete2> {
 
     byte[] EnTete = null;
+    //LiaisonClient lc = new LiaisonClient();
 
-    public void creationEntete(String filename)
+/*    public void creationEntete(String filename)
     {
         EnTete = new byte[filename.getBytes().length];
 
 
-    }
+    }*/
 
-    //Sert à faire la fonction du CRC32, return un long
-    long EnTeteReussiOuPas = getCRC32Checksum(EnTete);
+/*    //Sert à faire la fonction du CRC32, return un long
+    long EnTeteReussiOuPas = lc.getCRC32Checksum(EnTete);
     //Transform le long precedent en bytes
-    byte[] bytes = ByteBuffer.allocate(Long.SIZE / Byte.SIZE).putLong(EnTeteReussiOuPas).array();
+    byte[] bytes = ByteBuffer.allocate(Long.SIZE / Byte.SIZE).putLong(EnTeteReussiOuPas).array();*/
 
-    //On met la reponse du CRC32 avec l'en-tete deja fait
+/*    //On met la reponse du CRC32 avec l'en-tete deja fait
     byte[] EnTete2 = new byte[EnTete.length + bytes.length];
-        System.arraycopy(EnTete, 0, EnTete2, 0, EnTete.length);
-        System.arraycopy(bytes, 0, EnTete2, EnTete.length, bytes.length);
+    System.arraycopy(EnTete, 0, EnTete2, 0, EnTete.length);
+    System.arraycopy(bytes, 0, EnTete2, EnTete.length, bytes.length);*/
 
 
 
@@ -34,23 +37,33 @@ public class TransportClient {
 
     String nonRepertoire = null;
 
-    public void transport(String records, File fichier) throws IOException {
+    public void transport(String records, String fichier) throws IOException {
         LiaisonClient l = new LiaisonClient();
         byte[] bytes = records.getBytes();
-        byte[][] hey = divideArray(bytes,200);
+        String trame = divideArray(bytes,200);
 
         //1.
-        fichier.getName();
+        File fi = new File(fichier);
+        String name = fi.getName();
+        String fichierAvecNom = cat(name, fichier);
+
 
         //2.
-        String hey2 = EnTeteLisible(hey);
+        String heyString = trame.toString();
+        String trame2 = EnTeteLisible(heyString);
+        String FichierNomEntete = cat(trame2, fichierAvecNom);
 
-        l.nextpaquetS(hey2);
+        l.nextpaquetS(FichierNomEntete);
     }
 
-    public static byte[][] divideArray(byte[] source, int chunksize) {
+    public int CalculerNombrePackets(byte[] bytes){
+        int longeurMessage = bytes.length;
+        System.out.println(longeurMessage);
+        int nbPackets = (int) Math.ceil(longeurMessage/200.0);
+        return nbPackets;
+    }
 
-
+    public static String divideArray(byte[] source, int chunksize) {
         byte[][] ret = new byte[(int) Math.ceil(source.length / (double) chunksize)][chunksize];
 
         int start = 0;
@@ -65,7 +78,7 @@ public class TransportClient {
             start += chunksize;
             parts++;
         }
-        return ret;
+        return ret.toString();
     }
 
 
@@ -80,12 +93,12 @@ public class TransportClient {
     }*/
 
     //2.
-    public String EnTeteLisible(byte[][] paquet){
+    public String EnTeteLisible(String paquet){
         String enTete = cat("Are you not entertained?!?",paquet);
                 return enTete;
     }
 
-    public String cat(String a, byte[][] b) {
+    public String cat(String a, String b) {
         a += b.toString();
         return a;
     }
