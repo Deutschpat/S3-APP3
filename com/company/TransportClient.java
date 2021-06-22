@@ -6,6 +6,7 @@ import java.net.SocketException;
 public class TransportClient {
 
     private LiaisonClient liaisonClient;
+    private String[] paquetEntete;
 
     /**
      * @param liaisonClient
@@ -21,15 +22,14 @@ public class TransportClient {
      * @param
      * @return
      */
-    public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet) {
-        //String[] envoyerPaquet = EntetePaquet(message, nomfichier);
+    public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet,String[] address) throws SocketException {
         LiaisonClient li = new LiaisonClient();
-        for (int i = 0; i < nbpaquet; i++) {
-            try {
-                li.envoieVersLiaisonServeur(message[i]);
-            } catch (SocketException e) {
-                e.printStackTrace();
-            }
+        for(int i = 0; i < message.length;i++)
+        {
+            //System.out.println(i);
+            //System.out.println(message[i]);
+           //li.envoieVersLiaisonServeur(paquetEntete, address,nbpaquet);
+
         }
 
     }
@@ -82,7 +82,7 @@ public class TransportClient {
      * @param nomFichier Le nomFichier correspond a one-liners.txt
      * @return Il va retourner des paquets a envoyer avec l'informations importants et l'en-tete
      */
-    public String[] EntetePaquet(String message, String nomFichier) {
+    public String[] EntetePaquet(String message, String nomFichier,String[] address) throws SocketException {
 
 
         //Calculer le nombre de paquets nécéssaires
@@ -163,15 +163,9 @@ public class TransportClient {
         }
 
         //System.out.printf(messageFragmentListe[0]);
-        envoieVersLiaisonClient(messageFragmentListe,nomFichier,cnp);
+        envoieVersLiaisonClient(messageFragmentListe,nomFichier,cnp,address);
         return messageFragmentListe;
     }
 
-    //IMPORTANT  //Preparation de transmission vers le serveur
-    //            /*DatagramSocket socket = new DatagramSocket();
-    //            byte[] buf = records.toString().getBytes();
-    //            InetAddress address = InetAddress.getByName(args[0]);
-    //            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
-    //            socket.send(packet);*/
 
 }

@@ -11,6 +11,11 @@ public class QuoteClient {
         ApplicationClient applicationClient = new ApplicationClient();
         applicationClient.envoieVersTransportClient("C:\\Users\\aaael\\Documents\\GISESSION3\\APP3\\Problematique\\S3-APP3\\company\\one-liners.txt", args);
 
+
+        DatagramSocket socket = new DatagramSocket();
+        byte[] buf = new byte[256];
+        InetAddress address = InetAddress.getByName(args[0]);
+        DatagramPacket packet = new DatagramPacket(buf,buf.length,address,25500);
 /*        // get response
         packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);

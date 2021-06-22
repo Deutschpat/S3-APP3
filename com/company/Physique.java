@@ -12,7 +12,7 @@ import java.net.InetAddress;
 
         public Physique(){
             try{
-                socketReception = new DatagramSocket(25501);
+                socketReception = new DatagramSocket(25500);
                 socketEnvoi = new DatagramSocket();
             }catch (Exception e){
                 e.printStackTrace();
@@ -28,8 +28,6 @@ import java.net.InetAddress;
         public void EnvoiServeur(String paquet, String adresse){
             try{
                 InetAddress address = InetAddress.getByName(adresse);
-
-                System.out.println(paquet);
                 //Transformation en bytes
                 byte[] buf =  paquet.getBytes();
 

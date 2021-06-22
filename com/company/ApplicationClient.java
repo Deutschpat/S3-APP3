@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.SocketException;
 
 public class ApplicationClient {
 
@@ -22,11 +23,10 @@ public class ApplicationClient {
      * @param nomfichier il s'agit du nom du fichier à lire dans notre cas le one-liners.txt
      * @param args
      */
-    public void envoieVersTransportClient(String nomfichier, String[] args)
-    {
+    public void envoieVersTransportClient(String nomfichier, String[] args) throws SocketException {
         String envoie = readFile(nomfichier,args);
         ConnectionVersTransport(new TransportClient());
-        this.transportClient.EntetePaquet(envoie,nomfichier);
+        transportClient.EntetePaquet(envoie,nomfichier,args);
     }
 
     /**

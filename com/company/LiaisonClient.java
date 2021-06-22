@@ -11,7 +11,7 @@ import java.util.zip.Checksum;
 public class LiaisonClient {
 
 
-    private String envoyerPaquet;
+    private String[] envoyerPaquet;
     private String answer;
     private TransportClient transportClient;
     private TransportServeur transportServeur;
@@ -36,11 +36,6 @@ public class LiaisonClient {
     }
 
 
-    public String remplirPaquet(String recuPaquet) {
-        envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
-        System.out.println(envoyerPaquet);
-        return envoyerPaquet;
-    }
 
     public void receptionPaquet(String recuPaquet) {
         String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
@@ -53,32 +48,33 @@ public class LiaisonClient {
         }
     }
 
-    public void reponseATransport(String message) {
-        message.substring(0, message.length() - 10);
-
+    /**
+     *
+     * @param recuPaquet
+     * @return
+     */
+    public String remplirPaquet(String recuPaquet) {
+        /*envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
+        return envoyerPaquet;*/
+        return "";
     }
 
-    public void envoieVersLiaisonServeur(String message) throws SocketException {
-        envoyerPaquet = remplirPaquet(message);
+    /**
+     *
+     * @param message
+     * @throws SocketException
+     */
+    public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws SocketException {
+        //envoyerPaquet = remplirPaquet(message);
         System.out.println(envoyerPaquet);
+        Physique physique = new Physique();
+        for(int i = 0;i<nbpaquet;i++)
+        {
+            //physique.EnvoiServeur(envoyerPaquet,address[0]);
+        }
 
-
-
-       // physique.EnvoiServeur(envoyerPaquet, adresse);
         //TODO Il manque le log
     }
-
-    public void answerClient(String paquet) {
-        answer = paquet;
-    }
-
-    public String getAnswerClient() {
-        if (connexionState) {
-            return answer;
-        }
-        return null;
-    }
-
 
     public static long getCRC32Checksum(byte[] bytes) {
         Checksum crc32 = new CRC32();
@@ -91,6 +87,18 @@ public class LiaisonClient {
             return true;
         }
         return false;
+    }
+
+    public void answerClient(String paquet) {
+        answer = paquet;
+    }
+
+
+    public String getAnswerClient() {
+        if (connexionState) {
+            return answer;
+        }
+        return null;
     }
 
     public void endConnection() {
