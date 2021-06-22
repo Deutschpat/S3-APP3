@@ -3,21 +3,31 @@ package com.company;
 
 import java.io.*;
 import java.net.*;
+import java.security.*;
 import java.util.*;
+import java.security.cert.CertPath;
+import java.sql.Timestamp;
 
 public class QuoteServerThread extends Thread {
 
     protected DatagramSocket socket = null;
     protected BufferedReader in = null;
     protected boolean moreQuotes = true;
+    private static File log;
+    private static OutputStream osLog;
 
     public QuoteServerThread() throws IOException {
         this("QuoteServerThread");
     }
 
+
+
     public QuoteServerThread(String name) throws IOException {
         super(name);
         socket = new DatagramSocket(25500);
+
+        log = new File("liaisonDeDonnees.log");
+        osLog = new FileOutputStream(log,true);
     }
 
     public void run() {
@@ -68,6 +78,13 @@ public class QuoteServerThread extends Thread {
         }
         return returnValue;
     }*/
+public synchronized static void log(String msg) throws IOException {
+    // Crée un time stamp assez clean
+    osLog.write(("[" + new Timestamp(System.currentTimeMillis()).toString().substring(11,21) + "] [Serveur] : ").getBytes());
+    osLog.write(msg.trim().getBytes());
+    // Change de ligne
+    osLog.write(10);
+}
 }
 
 
