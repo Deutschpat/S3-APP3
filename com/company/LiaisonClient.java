@@ -1,46 +1,77 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.sql.Timestamp;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
-import java.lang.Long;
-import java.net.*;
+
 
 public class LiaisonClient {
     String test = "test";
     byte[] bytes = test.getBytes();
-    private static OutputStream BackLog;
-    private static File log;
+    //private static OutputStream BackLog;
+    //private static File log;
 
-    public LiaisonClient(){};
+    private String envoyerPaquet;
+    private String answer;
+    private TransportClient transportClient;
+    private TransportServeur transportServeur;
+    private Physique physique;
+    private boolean connexionState;
 
+    public LiaisonClient() {
+        connexionState = true;
 
-    public void nextpaquetS(String paquet) throws IOException {
-
-        //Sert a avoir la longueur en string du paquet
-       // String longueur = BigInteger.valueOf(paquet.length()).toString();             //Changer la ligne
-        backlog("Reception du packet.");
-
-        //Sert à mettre le paquet original avec sa longueur pour creer un en-tete
-       // String EnTete = cat(longueur, paquet);
-
-        //Sert à faire la fonction du CRC32, return un long
-        long EnTeteReussiOuPas = getCRC32Checksum(paquet.getBytes());
-        //Transform le long precedent en String
-        String bytes = String.valueOf(EnTeteReussiOuPas);
-
-        //On met la reponse du CRC32 avec l'en-tete deja fait
-        String EnTete2 = cat(paquet,bytes);
-
-        //On l'envoie à qui?
     }
 
+    public void ConnectionVersTransportClient(TransportClient transportClient) {
+        this.transportClient = transportClient;
+    }
+
+    public void ConnectionVersPhysique(Physique physique) {
+        this.physique = physique;
+    }
+
+    public void ConnectionVersTransportServeur(TransportServeur transportServeur) {
+        this.transportServeur = transportServeur;
+    }
+
+
+    public String remplirPaquet(String recuPaquet) {
+        envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
+        return envoyerPaquet;
+    }
+
+    public void receptionPaquet(String recuPaquet) {
+        String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
+        String message = recuPaquet.substring(0, recuPaquet.length() - 10);
+        if (CRCComparaison(message, crc32)) {
+            transportServeur.getLiaisonCLient(recuPaquet);
+
+        } else {
+            transportServeur.demandeRenvoie(recuPaquet);
+        }
+    }
+
+    public void reponseATransport(String message) {
+        message.substring(0, message.length() - 10);
+
+    }
+
+    public void envoieVersLiaisonServeur(String message, String adresse) {
+        envoyerPaquet = remplirPaquet(message);
+        physique.EnvoiServeur(envoyerPaquet, adresse);
+        //TODO Il manque le log
+    }
+
+    public void answerClient(String paquet) {
+        answer = paquet;
+    }
+
+    public String getAnswerClient() {
+        if (connexionState) {
+            return answer;
+        }
+        return null;
+    }
 
 
     public static long getCRC32Checksum(byte[] bytes) {
@@ -49,31 +80,18 @@ public class LiaisonClient {
         return crc32.getValue();
     }
 
-    private synchronized static void backlog(String msg) throws IOException {
-        log = new File("liaisonDeDonnees.log");
-        BackLog = new FileOutputStream(log,true);
-
-        BackLog.write(("[" +
-                new Timestamp(System.currentTimeMillis()).toString().substring(11,21) +
-                "] [Serveur] : ").getBytes());
-        BackLog.write(msg.trim().getBytes());
-        BackLog.write(10);
-   }
-
-
-    String cat(String a, String b) {
-        a += b;
-        return a;
+    public boolean CRCComparaison(String donneesRecu, String crcRecu) {
+        if (crcRecu.equals(getCRC32Checksum(donneesRecu.getBytes()))) {
+            return true;
+        }
+        return false;
     }
 
+    public void endConnection() {
+        connexionState = false;
+    }
 
-
-
-//  private synchronized static void backlog(String msg) throws IOException {
-//      // Crée un time stamp assez clean
-//       osLog.write(("[" + new Timestamp(System.currentTimeMillis()).toString().substring(11,21) + "] [Serveur] : ").getBytes());
-//       osLog.write(msg.trim().getBytes());
-//       // Change de ligne
-//       osLog.write(10);
-//   }
+    public boolean getConnectionState() {
+        return connexionState;
+    }
 }

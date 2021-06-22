@@ -1,25 +1,47 @@
 package com.company;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ApplicationClient {
 
-    public void readFile(String filename, String[] args)
+    private TransportClient transportClient = new TransportClient();
+
+
+    /**
+     * Elle permet la connection de la couche d'application à la couche de transport. Par contre je sais pas si elle est vraiment utile.
+     * @param transportClient
+     */
+    public void ConnectionVersTransport(TransportClient transportClient)
+    {
+        this.transportClient = transportClient;
+    }
+
+    /**
+     * Elle permet d'envoyer à la couche de transport du client le fichier lu sous la forme de String
+     * @param nomfichier il s'agit du nom du fichier à lire dans notre cas le one-liners.txt
+     * @param args
+     */
+    public void envoieVersTransportClient(String nomfichier, String[] args)
+    {
+        String envoie = readFile(nomfichier,args);
+        ConnectionVersTransport(new TransportClient());
+        this.transportClient.EntetePaquet(envoie,nomfichier);
+    }
+
+    /**
+     * Elle permet de lire le fichier one-liners.txt et de pouvoir le transformer en String et permettre l'envoi.
+     * @param filename Il s'agit du nom du fichier. Dans notre cas le one-liners.txt
+     * @param args
+     * @return Elle retourne un String des phrases lues
+     */
+    public String readFile(String filename, String[] args)
     {
         if (args.length != 1) {
             System.out.println("Usage: java QuoteClient <hostname>");
-            return;
+            return "";
         }
+
         StringBuilder records = new StringBuilder();
         try
         {
@@ -28,29 +50,16 @@ public class ApplicationClient {
             while ((line = reader.readLine()) != null)
             {
                 records.append(line).toString();
-                //System.out.println("lol");
             }
-            System.out.println(records);
             reader.close();
 
-
-            TransportClient transportClient = new TransportClient();
-            transportClient.MessageFragmenteEnBytes(records.toString());
-
-            //Preparation de transmission vers le serveur
-            DatagramSocket socket = new DatagramSocket();
-            byte[] buf = records.toString().getBytes();
-            InetAddress address = InetAddress.getByName(args[0]);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
-            socket.send(packet);
-
-            return;
+            return records.toString();
         }
         catch (Exception e)
         {
             System.err.format("Exception occurred trying to read '%s'.", filename);
             e.printStackTrace();
-            return;
+            return "";
         }
     }
 
