@@ -2,12 +2,11 @@ package com.company;
 
 import java.lang.*;
 
-public class TransportClient{
+public class TransportClient {
 
     private LiaisonClient liaisonClient;
 
     /**
-     *
      * @param liaisonClient
      * @return
      */
@@ -16,52 +15,51 @@ public class TransportClient{
     }
 
     /**
-     *
      * @param message
      * @param nomfichier
      * @param adresse
      * @return
      */
-    public void envoieVersLiaisonClient(String message, String nomfichier, String adresse)
-    {
-        String[] envoyerPaquet = EntetePaquet(message,nomfichier);
-        for(int i = 0; i < envoyerPaquet.length; i++) {
-            liaisonClient.envoieVersLiaisonServeur(envoyerPaquet[i],adresse);
+    public void envoieVersLiaisonClient(String message, String nomfichier, String adresse) {
+        String[] envoyerPaquet = EntetePaquet(message, nomfichier);
+        for (int i = 0; i < envoyerPaquet.length; i++) {
+            liaisonClient.envoieVersLiaisonServeur(envoyerPaquet[i], adresse);
         }
     }
 
     /**
      * Elle permet de calculer le nombre de paquet nécéssaire pour un message d'une certaine taille en bytes(200).
+     *
      * @param bytes La taille du message(String) en bytes.
      * @return Elle retourne le nombre de packet nécéssaire pour envoyer le message
      */
-    public int CalculerNombrePackets(byte[] bytes){
+    public int CalculerNombrePackets(byte[] bytes) {
         int longeurMessage = bytes.length;
-        int nbPackets = (int) Math.ceil(longeurMessage/200.0);
+        int nbPackets = (int) Math.ceil(longeurMessage / 200.0);
         return nbPackets;
     }
 
     /**
      * Elle sert à séparer le message d'une certaine taille en bytes en plusieurs paquets de 200 bytes.
+     *
      * @param message Le message a fragmenter en paquets
      * @return Le message fragmenter en une liste de string.
      */
-    public String[] MessageFragmenteEnBytes(String message){
+    public String[] MessageFragmenteEnBytes(String message) {
         int cnp = CalculerNombrePackets(message.getBytes());
         int debut = 0;
         String List[] = new String[cnp];
 
-        for(int i=0; i<=cnp-1; i++){
-            if(i==cnp-1){
-                debut = (i)*200;
-                List[i] = new String(message.getBytes(), debut, message.getBytes().length%200);
+        for (int i = 0; i <= cnp - 1; i++) {
+            if (i == cnp - 1) {
+                debut = (i) * 200;
+                List[i] = new String(message.getBytes(), debut, message.getBytes().length % 200);
                 //System.out.println(debut);
                 //System.out.println(i);
                 //System.out.println(List[i]);
-            }
-            else{
-                debut = (i)*200;
-                List[i] = new String(message.getBytes(), debut, 200 );
+            } else {
+                debut = (i) * 200;
+                List[i] = new String(message.getBytes(), debut, 200);
                 //System.out.println(debut);
                 //System.out.println(i);
                 //System.out.println(List[i]);
@@ -72,10 +70,9 @@ public class TransportClient{
     }
 
     /**
-     *
-     * @param message
-     * @param nomFichier
-     * @return
+     * @param message Il s'agit du message a separer en paquet et creer des entete pour ceux-ci
+     * @param nomFichier Le nomFichier correspond a one-liners.txt
+     * @return Il va retourner des paquets a envoyer avec l'informations importants et l'en-tete
      */
     public String[] EntetePaquet(String message, String nomFichier) {
 
@@ -83,71 +80,81 @@ public class TransportClient{
         //Calculer le nombre de paquets nécéssaires
         int cnp = CalculerNombrePackets(message.getBytes());
 
-        //Calculer la taille du message avant d'y rajouter l'en-tête
-        String messageAvantEntete[] = MessageFragmenteEnBytes(message);
+        //Garder le message a ajouter
+        String messageFragmenenter[] = MessageFragmenteEnBytes(message);
 
         //Espace pour stocker tous les paquets à envoyer avec l'entête
         String messageFragmentListe[] = new String[cnp];
 
-        //Espace pour stocker le nombre de paquets pour transmettre un fichier
+        ///Espace pour stocker le nombre de paquets pour transmettre un fichier
         String nombreDePaquet = "";
         //Attribution de 4 bytes d'espace pour afficher le nombre de paquet nécéssaire pour le message
-        if(4 - String.valueOf(cnp).length() != 0){              //TODO Faire une fonction pour ça
-            String nombreDeDigits = "%0" + (4) + "d";
-            nombreDePaquet = String.format(nombreDeDigits, cnp);
-
-        }else{
+        if (4 - String.valueOf(cnp).length() != 0) {              //TODO Faire une fonction pour ça
+            String espaceEnteteNombre = "%0" + (4) + "d";
+            nombreDePaquet = String.format(espaceEnteteNombre, cnp);
+        } else {
             nombreDePaquet = String.valueOf(cnp);
-
         }
 
-
-        String enteteLongueurFichier = "";
-        //Remplissage de zéros pour la longueur du fichier
-        if(3 - String.valueOf(nomFichier.getBytes().length).length() != 0) {
-            String nombreDeDigitsFichier = "%0" + (3) + "d";
-            enteteLongueurFichier = String.format(nombreDeDigitsFichier, nomFichier.getBytes().length);
-        }else{
-            enteteLongueurFichier = String.valueOf(nomFichier.getBytes().length);
+        ///Espace pour stocker la longueur pour transmettre un fichier
+        String LongueurFichier = "";
+        //Attribution de 4 bytes d'espace pour afficher
+        if (3 - String.valueOf(nomFichier.getBytes().length).length() != 0) {
+            String espaceEnteteLongueur = "%0" + (3) + "d";
+            LongueurFichier = String.format(espaceEnteteLongueur, 200);
         }
-        //Paquet avec le nom dyu fichier seulement
-        messageFragmentListe[0] = "0001" + nombreDePaquet + enteteLongueurFichier + "0" + nomFichier;
+        else
+        {
+            LongueurFichier = String.valueOf(nomFichier.getBytes().length);
+        }
 
+        //Completer l'entete du premier paquet avec le nom du fichier
+        messageFragmentListe[0] = "0001" + nombreDePaquet + LongueurFichier + "$" + messageFragmenenter[0];
 
+        ///Espace pour stocker et attribuer le numero actuel des paquets pour transmettre un fichier
         for (int i = 1; i < cnp; i++) {
-            //Remplissage de zéros pour le paquet actuel
-            String enteteNombrePaquetFragment = "0000";
-
-            if(4 - String.valueOf(i).length() != 0){
-                String nombreDeDigitsFragmentActuel = "%0" + (4) + "d";
-                enteteNombrePaquetFragment = String.format(nombreDeDigitsFragmentActuel, i +1);
+            String numeroDuPaquet = "0000";
+            if (4 - String.valueOf(i).length() != 0) {
+                String espaceEnteteNumero = "%0" + (4) + "d";
+                numeroDuPaquet = String.format(espaceEnteteNumero, i + 1);
+                //System.out.println(numeroDuPaquet);
             }
-            else{
-                enteteNombrePaquetFragment = String.valueOf(i);
+            else
+            {
+                numeroDuPaquet = String.valueOf(i);
             }
 
-            //Remplissage de zéros pour la longueur du dernier paquet
-            String enteteLongueurFichierFragment;
-            if (cnp - 1 == i){
-                if(3 - String.valueOf(messageAvantEntete[i - 1].getBytes().length).length() != 0) {
-                    String nombreDeDigitsFragmentTaille = "%0" + (3) + "d";
-                    System.out.println(nombreDeDigitsFragmentTaille);
-                    System.out.println(nomFichier.getBytes().length);
+            //La longueur du dernier paquet
+            String espaceEnteteLongueurDernier;
+            /*System.out.println(i);
+            System.out.println(cnp-1);*/
+            if (cnp - 1 == i) {
 
-                    enteteLongueurFichierFragment = String.format(nombreDeDigitsFragmentTaille, messageAvantEntete[i - 1].getBytes().length);
+                if (3 - String.valueOf(messageFragmenenter[i].getBytes().length).length() != 0)
+                {
+                    String espaceEnteteTaille = "%0" + (3) + "d";
+                    //System.out.println(messageFragmenenter[i].getBytes().length);
+                    //System.out.println(i);
+
+                    espaceEnteteLongueurDernier = String.format(espaceEnteteTaille, messageFragmenenter[i].getBytes().length);
+                    //System.out.println(espaceEnteteLongueurDernier);
                 }
-                else{
-                    enteteLongueurFichierFragment = String.valueOf(messageAvantEntete[i - 1].getBytes().length);
+                else
+                {
+                    espaceEnteteLongueurDernier = String.valueOf(messageFragmenenter[i - 1].getBytes().length);
+
                 }
             }
-            else{
-                enteteLongueurFichierFragment = "200";
+            else
+            {
+                espaceEnteteLongueurDernier = "200";
             }
 
-            messageFragmentListe[i] = enteteNombrePaquetFragment + nombreDePaquet + enteteLongueurFichierFragment + "0" + messageAvantEntete[i-1];
+            messageFragmentListe[i] = numeroDuPaquet + nombreDePaquet + espaceEnteteLongueurDernier + "$" + messageFragmenenter[i];
+            //System.out.println(messageFragmentListe[i]);
         }
 
-
+        //System.out.printf(messageFragmentListe[0]);
         return messageFragmentListe;
     }
 
@@ -159,47 +166,3 @@ public class TransportClient{
     //            socket.send(packet);*/
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //1.
-/*    public String nomFichier(File fichier){
-        if(fichier[0][0]){
-            f = new File(fichier.getName());
-            f.toString().trim();
-            return String.valueOf(f);
-        }
-        return String.valueOf(f);
-    }*/
-
-   /* //2.
-    public String EnTeteLisible(String paquet){
-        String enTete = cat("Are you not entertained?!?",paquet);
-                return enTete;
-    }
-
-    public String cat(String a, String b) {
-        a += b.toString();
-        return a;
-    }
-
-    public String cat2(int a, File b){
-        return String.valueOf(a) + "A" + b.toString(); //La lettre "A" sera utilisé pour séparer la numérotation du reste du paquet
-    }
-
-*/
-
