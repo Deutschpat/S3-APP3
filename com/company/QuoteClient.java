@@ -9,7 +9,7 @@ public class QuoteClient {
         // get a datagram socket
         // send request
         ApplicationClient applicationClient = new ApplicationClient();
-        applicationClient.envoieVersTransportClient("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\one-liners.txt", args);
+        applicationClient.envoieVersTransportClient("C:\\Users\\aaael\\Documents\\GISESSION3\\APP3\\Problematique\\S3-APP3\\company\\one-liners.txt", args);
 
 /*        // get response
         packet = new DatagramPacket(buf, buf.length);
