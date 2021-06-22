@@ -18,28 +18,8 @@ public class LiaisonClient {
     private static OutputStream BackLog;
     private static File log;
 
+    public LiaisonClient(){};
 
-/*    public void nextpaquet(byte[] paquet){
-
-        //Sert a avoir la longueur en bytes du paquet
-        byte[] longueur = BigInteger.valueOf(paquet.length).toByteArray();             //Changer la ligne
-
-        //Sert à mettre le paquet original avec sa longueur pour creer un en-tete
-        byte[] EnTete = new byte[longueur.length + paquet.length];
-        System.arraycopy(longueur, 0, EnTete, 0, longueur.length);
-        System.arraycopy(paquet, 0, EnTete, longueur.length, paquet.length);
-
-        //Sert à faire la fonction du CRC32, return un long
-        long EnTeteReussiOuPas = getCRC32Checksum(EnTete);
-        //Transform le long precedent en bytes
-        byte[] bytes = ByteBuffer.allocate(Long.SIZE / Byte.SIZE).putLong(EnTeteReussiOuPas).array();
-
-        //On met la reponse du CRC32 avec l'en-tete deja fait
-        byte[] EnTete2 = new byte[EnTete.length + bytes.length];
-        System.arraycopy(EnTete, 0, EnTete2, 0, EnTete.length);
-        System.arraycopy(bytes, 0, EnTete2, EnTete.length, bytes.length);
-
-    }*/
 
     public void nextpaquetS(String paquet) throws IOException {
 
