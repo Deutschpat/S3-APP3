@@ -6,7 +6,7 @@ public class TransportServeur {
 
     private int lastPaquet;
     private int nbrdemande;
-    private LiaisonClient liaisonClient;
+    private LiaisonServeurClient liaisonServeurClient;
     private String paquetList[];
     private Physique physique = new Physique(true);
 
@@ -16,21 +16,21 @@ public class TransportServeur {
       nbrdemande = 1;
     }
 
-    public void ConnectionVersLiaison(LiaisonClient liaisonClient)
+    public void ConnectionVersLiaison(LiaisonServeurClient liaisonClient)
     {
-      this.liaisonClient = liaisonClient;
+      this.liaisonServeurClient = liaisonServeurClient;
     }
 
     public void endConnection()
     {
-        liaisonClient.endConnection();
+        liaisonServeurClient.endConnection();
     }
 
     public void demandeRenvoie(String paquetManquant)
     {
         String askAgain = paquetManquant.substring(0,11) + "1" + "Renvoyer le paquet";
         //TODO Demander pour compr/hension
-        liaisonClient.answerClient(askAgain);
+        liaisonServeurClient.answerClient(askAgain);
     }
 
     public void accuserReception(String paquetAccepted)
@@ -38,7 +38,7 @@ public class TransportServeur {
         if(paquetList[Integer.parseInt(paquetAccepted.substring(0,4))-1] == null)
             paquetList[Integer.parseInt(paquetAccepted.substring(0,4)) - 1] = paquetAccepted;
             String ack = paquetAccepted.substring(0,11) + "$" + "Package received";
-            liaisonClient.answerClient(ack);
+            liaisonServeurClient.answerClient(ack);
     }
 
     public void TraitementPaquetEnvoyer(String paquet)

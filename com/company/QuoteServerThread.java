@@ -25,7 +25,6 @@ public class QuoteServerThread extends Thread {
     public QuoteServerThread(String name) throws IOException {
         super(name);
         socket = new DatagramSocket(25500);
-
         log = new File("liaisonDeDonnees.log");
         osLog = new FileOutputStream(log,true);
     }
@@ -39,6 +38,7 @@ public class QuoteServerThread extends Thread {
                 // receive request
                 DatagramPacket packet = new DatagramPacket(dataReceived, dataReceived.length);
                 socket.receive(packet);
+
 
                 //Adapter le packet en String
                 String received = new String(packet.getData(), 0, packet.getLength());

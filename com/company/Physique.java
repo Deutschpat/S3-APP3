@@ -8,8 +8,9 @@ import java.net.SocketException;
 
 public class Physique {
 
-        private LiaisonClient liaison;
+        private LiaisonServeurClient liaisonServeurClient;
         private  DatagramSocket monSocket;
+        private String address;
 
 
         public Physique(boolean socket){
@@ -33,19 +34,25 @@ public class Physique {
         }
 
 
-        public void lierCoucheLiaison(LiaisonClient liaison){
-            this.liaison = liaison;
+        public void lierCoucheLiaison(LiaisonServeurClient liaison){
+            this.liaisonServeurClient = liaison;
         }
 
-        public void EnvoiServeur(String paquet, String adresse){
+        public void EnvoiServeur(String paquet, String addresse){
             try{
-                InetAddress address = InetAddress.getByName(adresse);
-                //Transformation en bytes
-                byte[] buf =  paquet.getBytes();
+                //System.out.println(paquet);
+                address = addresse;
 
-                // Envoi du paquet
+                //Obtenir l'adresse pour l'envoi
+                InetAddress address = InetAddress.getByName(addresse);
+                //Transformer en bits pour preparer l'envoi
+                byte[] buf =  paquet.getBytes();
+                //Lancement du paquet
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
                 monSocket.send(packet);
+
+
+
 
                 //receptionMessage();
 
@@ -60,13 +67,15 @@ public class Physique {
             byte[] buf = new byte[256];
             DatagramPacket packetReception = new DatagramPacket(buf, buf.length);
             try {
+
                 monSocket.receive(packetReception);
             } catch (IOException e) {
                 e.printStackTrace();
 
             }
 
-            liaison.receptionPaquet(new String(packetReception.getData(), 0 , packetReception.getLength()));
+
+            liaisonServeurClient.receptionPaquet(new String(packetReception.getData(), 0 , packetReception.getLength()));
 
         }
 

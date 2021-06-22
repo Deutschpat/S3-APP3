@@ -1,14 +1,11 @@
 package com.company;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 
-public class LiaisonClient {
+public class LiaisonServeurClient {
 
 
     private String envoyerPaquet;
@@ -18,7 +15,7 @@ public class LiaisonClient {
     private Physique physique = new Physique(false);
     private boolean connexionState;
 
-    public LiaisonClient() {
+    public LiaisonServeurClient() {
         connexionState = true;
     }
 
@@ -37,6 +34,7 @@ public class LiaisonClient {
 
     public void receptionPaquet(String recuPaquet) {
         String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
+        System.out.println();
         String message = recuPaquet.substring(0, recuPaquet.length() - 10);
         if (CRCComparaison(message, crc32)) {
             transportServeur.getLiaisonCLient(recuPaquet);
@@ -47,9 +45,9 @@ public class LiaisonClient {
     }
 
     /**
-     *
-     * @param recuPaquet
-     * @return
+     * Elle permet de rajouter le checksum a la fin de chaque paquet
+     * @param recuPaquet Il s'agit de chaque paquet
+     * @return Le paquet avec le checksum en plus
      */
     public String remplirPaquet(String recuPaquet) {
         envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
@@ -57,21 +55,34 @@ public class LiaisonClient {
     }
 
     /**
-     *
-     * @param message
+     * Elle permet d'envoyer les paquets vers la couche liaison du serveur via la couche physique
+     * @param message Il s'agit des messages avec leur entete respective
+     * @param address L'adress de l'ordinateur
+     * @param nbpaquet Le nombre de paquet
      * @throws SocketException
      */
     public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws SocketException {
         envoyerPaquet = remplirPaquet(message);
-        System.out.println(envoyerPaquet);
-        for(int i = 0;i<nbpaquet;i++)
+        //System.out.println(envoyerPaquet);
+        physique.EnvoiServeur(envoyerPaquet,address[0]);
+
+
+        /*for(int i = 0;i<nbpaquet;i++)
         {
+            //System.out.println(i);
+            //System.out.println(nbpaquet);
             physique.EnvoiServeur(envoyerPaquet,address[0]);
-            //TODO Envoie ack et Confirmation ack 
-        }
+            //TODO Envoie ack et Confirmation ack
+        }*/
+
         //TODO Il manque le log
     }
 
+    /**
+     * Obtenir le checksum de chaque paquet
+     * @param bytes
+     * @return
+     */
     public static long getCRC32Checksum(byte[] bytes) {
         Checksum crc32 = new CRC32();
         crc32.update(bytes, 0, bytes.length);

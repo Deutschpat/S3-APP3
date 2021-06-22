@@ -5,35 +5,33 @@ import java.net.SocketException;
 
 public class TransportClient {
 
-    private LiaisonClient liaisonClient;
+    private LiaisonServeurClient liaisonServeurClient;
     private String[] paquetEntete;
 
-    /**
-     * @param liaisonClient
+  /*  *//**
+     * @param liaisonServeurClient
      * @return
-     */
-    public void ConnectionVersLiaison(LiaisonClient liaisonClient) {
-        this.liaisonClient = new LiaisonClient();
-    }
+     *//*
+    public void ConnectionVersLiaison(LiaisonServeurClient liaisonServeurClient) {
+        this.liaisonServeurClient = new LiaisonServeurClient();
+    }*/
 
     /**
-     * @param message
-     * @param nomfichier
-     * @param
-     * @return
+     * Elle sert a envoyer les paquets vers la couche de liaison pour la prochaine etape avant la transmission d'information
+     * @param message Il s'agit d'un array avec l'information pour chaque paquet
+     * @param nomfichier one-liners.txt
+     * @param nbpaquet Le nombre de paquet
+     * @param address Il s'agit de l'adresse de l'ordinateur
      */
     public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet,String[] address) throws SocketException {
-        LiaisonClient li = new LiaisonClient();
+        LiaisonServeurClient li = new LiaisonServeurClient();
         for(int i = 0; i < message.length;i++)
         {
             //System.out.println(i);
             //System.out.println(message[i]);
             li.envoieVersLiaisonServeur(message[i], address,nbpaquet);
-
         }
-
     }
-
 
     /**
      * Elle permet de calculer le nombre de paquet nécéssaire pour un message d'une certaine taille en bytes(200).
@@ -49,7 +47,6 @@ public class TransportClient {
 
     /**
      * Elle sert à séparer le message d'une certaine taille en bytes en plusieurs paquets de 200 bytes.
-     *
      * @param message Le message a fragmenter en paquets
      * @return Le message fragmenter en une liste de string.
      */
@@ -78,6 +75,7 @@ public class TransportClient {
     }
 
     /**
+     * Elle sert a rajouter des entete a chaque paquet
      * @param message Il s'agit du message a separer en paquet et creer des entete pour ceux-ci
      * @param nomFichier Le nomFichier correspond a one-liners.txt
      * @return Il va retourner des paquets a envoyer avec l'informations importants et l'en-tete
