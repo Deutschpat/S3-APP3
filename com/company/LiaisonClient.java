@@ -11,11 +11,11 @@ import java.util.zip.Checksum;
 public class LiaisonClient {
 
 
-    private String[] envoyerPaquet;
+    private String envoyerPaquet;
     private String answer;
     private TransportClient transportClient;
     private TransportServeur transportServeur;
-    private Physique physique;
+    private Physique physique = new Physique(false);
     private boolean connexionState;
 
     public LiaisonClient() {
@@ -35,8 +35,6 @@ public class LiaisonClient {
         this.transportServeur = transportServeur;
     }
 
-
-
     public void receptionPaquet(String recuPaquet) {
         String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
         String message = recuPaquet.substring(0, recuPaquet.length() - 10);
@@ -54,9 +52,8 @@ public class LiaisonClient {
      * @return
      */
     public String remplirPaquet(String recuPaquet) {
-        /*envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
-        return envoyerPaquet;*/
-        return "";
+        envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
+        return envoyerPaquet;
     }
 
     /**
@@ -65,14 +62,13 @@ public class LiaisonClient {
      * @throws SocketException
      */
     public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws SocketException {
-        //envoyerPaquet = remplirPaquet(message);
+        envoyerPaquet = remplirPaquet(message);
         System.out.println(envoyerPaquet);
-        Physique physique = new Physique();
         for(int i = 0;i<nbpaquet;i++)
         {
-            //physique.EnvoiServeur(envoyerPaquet,address[0]);
+            physique.EnvoiServeur(envoyerPaquet,address[0]);
+            //TODO Envoie ack et Confirmation ack 
         }
-
         //TODO Il manque le log
     }
 

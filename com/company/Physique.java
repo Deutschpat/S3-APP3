@@ -4,22 +4,34 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 
-    public class Physique {
+public class Physique {
+
         private LiaisonClient liaison;
-        private  DatagramSocket socketReception;
-        private DatagramSocket socketEnvoi;
+        private  DatagramSocket monSocket;
 
-        public Physique(){
-            try{
-                socketReception = new DatagramSocket(25500);
-                socketEnvoi = new DatagramSocket();
-            }catch (Exception e){
-                e.printStackTrace();
-                socketReception.close();
-                socketEnvoi.close();
+
+        public Physique(boolean socket){
+            if(socket)
+            {
+                try {
+                    monSocket = new DatagramSocket(25500);
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
             }
+            else
+            {
+                try {
+                    monSocket = new DatagramSocket();
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
+
 
         public void lierCoucheLiaison(LiaisonClient liaison){
             this.liaison = liaison;
@@ -33,30 +45,30 @@ import java.net.InetAddress;
 
                 // Envoi du paquet
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
-                socketEnvoi.send(packet);
+                monSocket.send(packet);
 
-                receptionMessage();
+                //receptionMessage();
 
             }catch (Exception e){
                 e.printStackTrace();
-                socketReception.close();
-                socketEnvoi.close();
+
             }
+
         }
 
         public void receptionMessage(){
             byte[] buf = new byte[256];
             DatagramPacket packetReception = new DatagramPacket(buf, buf.length);
             try {
-                socketReception.receive(packetReception);
+                monSocket.receive(packetReception);
             } catch (IOException e) {
                 e.printStackTrace();
-                socketReception.close();
-                socketEnvoi.close();
+
             }
-            //socketReception.
-            //liaison.envoiReponseTransport(new String(packetReception.getData(), 0 , packetReception.getLength()));
+
+            liaison.receptionPaquet(new String(packetReception.getData(), 0 , packetReception.getLength()));
 
         }
+
 
 }

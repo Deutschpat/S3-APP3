@@ -28,7 +28,7 @@ public class TransportClient {
         {
             //System.out.println(i);
             //System.out.println(message[i]);
-           //li.envoieVersLiaisonServeur(paquetEntete, address,nbpaquet);
+            li.envoieVersLiaisonServeur(message[i], address,nbpaquet);
 
         }
 

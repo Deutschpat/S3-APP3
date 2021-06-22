@@ -1,11 +1,14 @@
 package com.company;
 
+import java.util.concurrent.CountDownLatch;
+
 public class TransportServeur {
 
     private int lastPaquet;
     private int nbrdemande;
     private LiaisonClient liaisonClient;
     private String paquetList[];
+    private Physique physique = new Physique(true);
 
     public TransportServeur()
     {
@@ -34,7 +37,7 @@ public class TransportServeur {
     {
         if(paquetList[Integer.parseInt(paquetAccepted.substring(0,4))-1] == null)
             paquetList[Integer.parseInt(paquetAccepted.substring(0,4)) - 1] = paquetAccepted;
-            String ack = paquetAccepted.substring(0,11) + "0" + "Package received";
+            String ack = paquetAccepted.substring(0,11) + "$" + "Package received";
             liaisonClient.answerClient(ack);
     }
 
