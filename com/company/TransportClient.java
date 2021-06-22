@@ -1,6 +1,7 @@
 package com.company;
 
 import java.lang.*;
+import java.net.SocketException;
 
 public class TransportClient {
 
@@ -11,21 +12,28 @@ public class TransportClient {
      * @return
      */
     public void ConnectionVersLiaison(LiaisonClient liaisonClient) {
-        this.liaisonClient = liaisonClient;
+        this.liaisonClient = new LiaisonClient();
     }
 
     /**
      * @param message
      * @param nomfichier
-     * @param adresse
+     * @param
      * @return
      */
-    public void envoieVersLiaisonClient(String message, String nomfichier, String adresse) {
-        String[] envoyerPaquet = EntetePaquet(message, nomfichier);
-        for (int i = 0; i < envoyerPaquet.length; i++) {
-            liaisonClient.envoieVersLiaisonServeur(envoyerPaquet[i], adresse);
+    public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet) {
+        //String[] envoyerPaquet = EntetePaquet(message, nomfichier);
+        LiaisonClient li = new LiaisonClient();
+        for (int i = 0; i < nbpaquet; i++) {
+            try {
+                li.envoieVersLiaisonServeur(message[i]);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
         }
+
     }
+
 
     /**
      * Elle permet de calculer le nombre de paquet nécéssaire pour un message d'une certaine taille en bytes(200).
@@ -155,6 +163,7 @@ public class TransportClient {
         }
 
         //System.out.printf(messageFragmentListe[0]);
+        envoieVersLiaisonClient(messageFragmentListe,nomFichier,cnp);
         return messageFragmentListe;
     }
 

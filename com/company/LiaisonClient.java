@@ -1,14 +1,15 @@
 package com.company;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 
 public class LiaisonClient {
-    String test = "test";
-    byte[] bytes = test.getBytes();
-    //private static OutputStream BackLog;
-    //private static File log;
+
 
     private String envoyerPaquet;
     private String answer;
@@ -19,14 +20,14 @@ public class LiaisonClient {
 
     public LiaisonClient() {
         connexionState = true;
-
     }
 
     public void ConnectionVersTransportClient(TransportClient transportClient) {
         this.transportClient = transportClient;
     }
 
-    public void ConnectionVersPhysique(Physique physique) {
+    public void ConnectionVersPhysique(Physique physique)
+    {
         this.physique = physique;
     }
 
@@ -37,6 +38,7 @@ public class LiaisonClient {
 
     public String remplirPaquet(String recuPaquet) {
         envoyerPaquet = recuPaquet + getCRC32Checksum(recuPaquet.getBytes());
+        System.out.println(envoyerPaquet);
         return envoyerPaquet;
     }
 
@@ -56,9 +58,13 @@ public class LiaisonClient {
 
     }
 
-    public void envoieVersLiaisonServeur(String message, String adresse) {
+    public void envoieVersLiaisonServeur(String message) throws SocketException {
         envoyerPaquet = remplirPaquet(message);
-        physique.EnvoiServeur(envoyerPaquet, adresse);
+        System.out.println(envoyerPaquet);
+
+
+
+       // physique.EnvoiServeur(envoyerPaquet, adresse);
         //TODO Il manque le log
     }
 
