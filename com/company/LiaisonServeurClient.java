@@ -12,7 +12,7 @@ public class LiaisonServeurClient {
     private String envoyerPaquet;
     private String answer;
     private TransportClient transportClient;
-    private TransportServeur transportServeur;
+    private TransportServeur transportServeur = new TransportServeur();
     private Physique physique = new Physique(false);
     private boolean connexionState;
 
@@ -35,13 +35,15 @@ public class LiaisonServeurClient {
 
     public void receptionPaquet(String recuPaquet) {
         String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
-        System.out.println();
+        System.out.println(crc32);
         String message = recuPaquet.substring(0, recuPaquet.length() - 10);
+        System.out.println(message);
         if (CRCComparaison(message, crc32)) {
+            System.out.println("LOL");
             transportServeur.getLiaisonCLient(recuPaquet);
 
         } else {
-            transportServeur.demandeRenvoie(recuPaquet);
+            //transportServeur.demandeRenvoie(recuPaquet);
         }
     }
 

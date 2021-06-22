@@ -10,6 +10,7 @@ public class Physique {
 
         private LiaisonServeurClient liaisonServeurClient;
         private  DatagramSocket monSocket;
+        private boolean socket = true;
         private String address;
 
 
@@ -40,7 +41,7 @@ public class Physique {
 
         public void EnvoiServeur(String paquet, String addresse){
             try{
-                //System.out.println(paquet);
+                System.out.println(paquet);
                 address = addresse;
 
                 //Obtenir l'adresse pour l'envoi
@@ -63,12 +64,14 @@ public class Physique {
 
         }
 
-        public void receptionMessage(){
+        /*public void receptionMessage(){
             byte[] buf = new byte[256];
             DatagramPacket packetReception = new DatagramPacket(buf, buf.length);
             try {
 
                 monSocket.receive(packetReception);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
 
@@ -79,5 +82,5 @@ public class Physique {
 
         }
 
-
+*/
 }

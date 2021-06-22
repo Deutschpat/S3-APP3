@@ -8,7 +8,6 @@ public class TransportServeur {
     private int nbrdemande;
     private LiaisonServeurClient liaisonServeurClient;
     private String paquetList[];
-    private Physique physique = new Physique(true);
 
     public TransportServeur()
     {

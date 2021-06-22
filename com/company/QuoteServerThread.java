@@ -21,49 +21,53 @@ public class QuoteServerThread extends Thread {
     }
 
 
-
     public QuoteServerThread(String name) throws IOException {
         super(name);
         socket = new DatagramSocket(25500);
         log = new File("C:\\Users\\aaael\\Documents\\GISESSION3\\APP3\\Problematique\\S3-APP3\\liaisonDeDonnees.log");
-        osLog = new FileOutputStream(log,true);
+        osLog = new FileOutputStream(log, true);
+
+
     }
 
     public void run() {
 
 
-            try {
-                byte[] dataReceived = new byte[256];
-
-                // receive request
-                DatagramPacket packet = new DatagramPacket(dataReceived, dataReceived.length);
-                socket.receive(packet);
+        try {
+            byte[] dataReceived = new byte[256];
 
 
-                //Adapter le packet en String
-                String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(received);
-                // figure out response
-                String dString = null;
-                if (in == null)
-                    dString = new Date().toString();
-                else
-                    //dString = getNextQuote();
+            // receive request
+            DatagramPacket packet = new DatagramPacket(dataReceived, dataReceived.length);
+            socket.receive(packet);
+            //System.out.println(packet);
 
-                dataReceived = dString.getBytes();
+            //Adapter le packet en String
 
-                // send the response to the client at "address" and "port"
-                InetAddress address = packet.getAddress();
+            String received = new String(packet.getData(), 0, packet.getLength());
+            //System.out.println(received);
+
+
+            // figure out response
+            //dString = getNextQuote();
+
+            LiaisonServeurClient liaisonServeur = new LiaisonServeurClient();
+            liaisonServeur.receptionPaquet(received);
+
+
+
+            // send the response to the client at "address" and "port"
+                /*InetAddress address = packet.getAddress();
                 int port = packet.getPort();
                 packet = new DatagramPacket(dataReceived, dataReceived.length, address, port);
-                socket.send(packet);
-            } catch (IOException e) {
-                e.printStackTrace();
-                moreQuotes = false;
-            }
+                socket.send(packet);*/
 
-        socket.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
 /*    protected String getNextQuote() {
         String returnValue = null;
