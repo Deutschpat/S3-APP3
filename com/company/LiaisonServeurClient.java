@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
@@ -61,19 +62,14 @@ public class LiaisonServeurClient {
      * @param nbpaquet Le nombre de paquet
      * @throws SocketException
      */
-    public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws SocketException {
+    public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws IOException {
         envoyerPaquet = remplirPaquet(message);
         //System.out.println(envoyerPaquet);
         physique.EnvoiServeur(envoyerPaquet,address[0]);
+        QuoteServerThread.log("This is a test");
 
-
-        /*for(int i = 0;i<nbpaquet;i++)
-        {
-            //System.out.println(i);
-            //System.out.println(nbpaquet);
-            physique.EnvoiServeur(envoyerPaquet,address[0]);
             //TODO Envoie ack et Confirmation ack
-        }*/
+
 
         //TODO Il manque le log
     }
