@@ -14,7 +14,7 @@ public class QuoteServerThread extends Thread {
     protected BufferedReader in = null;
     protected boolean moreQuotes = true;
     private static File log;
-    private static OutputStream osLog;
+    private static FileOutputStream osLog;
 
     public QuoteServerThread() throws IOException {
         this("QuoteServerThread");
@@ -26,7 +26,7 @@ public class QuoteServerThread extends Thread {
         super(name);
         socket = new DatagramSocket(25500);
 
-        log = new File("liaisonDeDonnees.log");
+        log = new File("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\liaisonDeDonnees.log");
         osLog = new FileOutputStream(log,true);
     }
 
@@ -79,11 +79,15 @@ public class QuoteServerThread extends Thread {
         return returnValue;
     }*/
 public synchronized static void log(String msg) throws IOException {
-    // Crée un time stamp assez clean
-    osLog.write(("[" + new Timestamp(System.currentTimeMillis()).toString().substring(11,21) + "] [Serveur] : ").getBytes());
-    osLog.write(msg.trim().getBytes());
-    // Change de ligne
-    osLog.write(10);
+
+    File fold=new File("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\liaisonDeDonnees2.log");
+    fold.delete();
+    File fnew=new File("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\liaisonDeDonnees2.log");
+
+    FileOutputStream oslog = new FileOutputStream("C:\\Users\\Telep\\Documents\\S3\\APP3\\src\\com\\company\\S3-APP3\\company\\liaisonDeDonnees.log");
+    oslog.write(("[" + new Timestamp(System.currentTimeMillis()).toString().substring(11,21) + "] [Serveur] : ").getBytes());
+    oslog.write(msg.trim().getBytes());
+    oslog.write(10);
 }
 }
 

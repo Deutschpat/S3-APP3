@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.IOException;
 import java.lang.*;
 import java.net.SocketException;
 
@@ -22,7 +23,7 @@ public class TransportClient {
      * @param
      * @return
      */
-    public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet,String[] address) throws SocketException {
+    public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet,String[] address) throws IOException {
         LiaisonClient li = new LiaisonClient();
         for(int i = 0; i < message.length;i++)
         {
@@ -82,7 +83,7 @@ public class TransportClient {
      * @param nomFichier Le nomFichier correspond a one-liners.txt
      * @return Il va retourner des paquets a envoyer avec l'informations importants et l'en-tete
      */
-    public String[] EntetePaquet(String message, String nomFichier,String[] address) throws SocketException {
+    public String[] EntetePaquet(String message, String nomFichier,String[] address) throws IOException {
 
 
         //Calculer le nombre de paquets nécéssaires

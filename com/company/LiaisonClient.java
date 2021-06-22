@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -61,15 +62,19 @@ public class LiaisonClient {
      * @param message
      * @throws SocketException
      */
-    public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws SocketException {
+    public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws IOException {
         envoyerPaquet = remplirPaquet(message);
+        physique.EnvoiServeur(envoyerPaquet,address[0]);
         System.out.println(envoyerPaquet);
-        for(int i = 0;i<nbpaquet;i++)
+        QuoteServerThread.log("This is a test");
+
+
+/*        for(int i = 0;i<nbpaquet;i++)
         {
             physique.EnvoiServeur(envoyerPaquet,address[0]);
             //TODO Envoie ack et Confirmation ack 
         }
-        //TODO Il manque le log
+        //TODO Il manque le log*/
     }
 
     public static long getCRC32Checksum(byte[] bytes) {
