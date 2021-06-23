@@ -11,10 +11,13 @@ public class Physique {
         private LiaisonServeurClient liaisonServeurClient;
         private  DatagramSocket monSocket;
         private boolean socket = true;
-        private String address;
+        String address;
 
-
-        public Physique(boolean socket){
+    /**
+     * Creation d'une couche physique avec un socket pouvant etre d'envoi ou de reception
+     * @param socket l'etat du socket true c'est envoie et false c'est reception
+     */
+    public Physique(boolean socket){
             if(socket)
             {
                 try {
@@ -34,47 +37,50 @@ public class Physique {
 
         }
 
-
-        public void lierCoucheLiaison(LiaisonServeurClient liaison){
+    /**
+     * Liaison a la couche de liaison.
+     * @param liaison
+     */
+    public void connexionVersLiaison(LiaisonServeurClient liaison)
+        {
             this.liaisonServeurClient = liaison;
         }
 
-        public void EnvoiServeur(String paquet, String addresse){
-            try{
-                System.out.println(paquet);
-                address = addresse;
+    /**
+     * Il s'agit de la facon d'envoyer la requete vers le serveur
+     * @param paquet les paquets d'informations a transmettre
+     * @param addresse l'address ou transmettre
+     */
+    public void EnvoiServeur(String paquet, String addresse){
+        try{
+            //System.out.println(paquet);
+            this.address = addresse;
+            //Obtenir l'adresse pour l'envoi
+            InetAddress address = InetAddress.getByName(addresse);
+            //Transformer en bits pour preparer l'envoi
+            byte[] buf =  paquet.getBytes();
+            //Lancement du paquet
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
+            monSocket.send(packet);
+            QuoteServerThread.log("Envoyer au serveur");
 
-                //Obtenir l'adresse pour l'envoi
-                InetAddress address = InetAddress.getByName(addresse);
-                //Transformer en bits pour preparer l'envoi
-                byte[] buf =  paquet.getBytes();
-                //Lancement du paquet
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 25500);
-                monSocket.send(packet);
 
-
-
-
-                //receptionMessage();
-
-            }catch (Exception e){
+        }catch (Exception e){
                 e.printStackTrace();
-
-            }
-
         }
 
+    }
+    /**
+     * Fonction de reception de message non-fonctionnel
+     */
         /*public void receptionMessage(){
             byte[] buf = new byte[256];
             DatagramPacket packetReception = new DatagramPacket(buf, buf.length);
             try {
 
                 monSocket.receive(packetReception);
-
-
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
 
 

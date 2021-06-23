@@ -53,6 +53,7 @@ public class QuoteServerThread extends Thread {
 
             LiaisonServeurClient liaisonServeur = new LiaisonServeurClient();
             liaisonServeur.receptionPaquet(received);
+            QuoteServerThread.log("Reception du paquet");
 
 
 
@@ -68,20 +69,11 @@ public class QuoteServerThread extends Thread {
         }
     }
 
-
-/*    protected String getNextQuote() {
-        String returnValue = null;
-        try {
-            if ((returnValue = in.readLine()) == null) {
-                in.close();
-                moreQuotes = false;
-                returnValue = "No more quotes. Goodbye.";
-            }
-        } catch (IOException e) {
-            returnValue = "IOException occurred in server.";
-        }
-        return returnValue;
-    }*/
+    /**
+     * Garder des traces dans un log
+     * @param msg Le message a entreposer
+     * @throws IOException
+     */
     public synchronized static void log(String msg) throws IOException {
         FileOutputStream oslog = new FileOutputStream("C:\\Users\\aaael\\Documents\\GISESSION3\\APP3\\Problematique\\S3-APP3\\liaisonDeDonnees.log");
         oslog.write(("[" + new Timestamp(System.currentTimeMillis()).toString().substring(11,21) + "] [Serveur] : ").getBytes());

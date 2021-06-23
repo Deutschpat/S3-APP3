@@ -2,20 +2,27 @@ package com.company;
 
 import java.io.IOException;
 import java.lang.*;
-import java.net.SocketException;
 
 public class TransportClient {
 
     private LiaisonServeurClient liaisonServeurClient;
-    private String[] paquetEntete;
+    private String[] adress;
+    private int nbpaquet;
+
+
+
+    public TransportClient()
+    {
+
+    }
 
   /*  *//**
      * @param liaisonServeurClient
      * @return
-     *//*
+     */
     public void ConnectionVersLiaison(LiaisonServeurClient liaisonServeurClient) {
         this.liaisonServeurClient = new LiaisonServeurClient();
-    }*/
+    }
 
     /**
      * Elle sert a envoyer les paquets vers la couche de liaison pour la prochaine etape avant la transmission d'information
@@ -25,12 +32,12 @@ public class TransportClient {
      * @param address Il s'agit de l'adresse de l'ordinateur
      */
     public void envoieVersLiaisonClient(String[] message, String nomfichier, int nbpaquet,String[] address) throws IOException {
-        LiaisonServeurClient li = new LiaisonServeurClient();
+        ConnectionVersLiaison(new LiaisonServeurClient());
         for(int i = 0; i < message.length;i++)
         {
             //System.out.println(i);
             //System.out.println(message[i]);
-            li.envoieVersLiaisonServeur(message[i], address,nbpaquet);
+            liaisonServeurClient.envoieVersLiaisonServeur(message[i], address,nbpaquet);
         }
     }
 
@@ -104,7 +111,7 @@ public class TransportClient {
         }
 
         ///Espace pour stocker la longueur pour transmettre un fichier
-        String LongueurFichier = "";
+        String LongueurFichier = "";                               //TODO Faire une fonction pour ça
         //Attribution de 4 bytes d'espace pour afficher
         if (3 - String.valueOf(nomFichier.getBytes().length).length() != 0) {
             String espaceEnteteLongueur = "%0" + (3) + "d";
@@ -116,7 +123,7 @@ public class TransportClient {
         }
 
         //Completer l'entete du premier paquet avec le nom du fichier
-        messageFragmentListe[0] = "0001" + nombreDePaquet + LongueurFichier + "$" + messageFragmenenter[0];
+        messageFragmentListe[0] = "0001" + nombreDePaquet + LongueurFichier + "0" + messageFragmenenter[0];
 
         ///Espace pour stocker et attribuer le numero actuel des paquets pour transmettre un fichier
         for (int i = 1; i < cnp; i++) {
@@ -157,12 +164,14 @@ public class TransportClient {
                 espaceEnteteLongueurDernier = "200";
             }
 
-            messageFragmentListe[i] = numeroDuPaquet + nombreDePaquet + espaceEnteteLongueurDernier + "$" + messageFragmenenter[i];
+            messageFragmentListe[i] = numeroDuPaquet + nombreDePaquet + espaceEnteteLongueurDernier + "0" + messageFragmenenter[i];
             //System.out.println(messageFragmentListe[i]);
         }
 
         //System.out.printf(messageFragmentListe[0]);
+        QuoteServerThread.log("Assemblage des paquets avec leur en-tete termine");
         envoieVersLiaisonClient(messageFragmentListe,nomFichier,cnp,address);
+        QuoteServerThread.log("Envoie vers la couche de liaison");
         return messageFragmentListe;
     }
 

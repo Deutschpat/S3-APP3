@@ -16,11 +16,13 @@ public class LiaisonServeurClient {
     private Physique physique = new Physique(false);
     private boolean connexionState;
 
-    public LiaisonServeurClient() {
+    public LiaisonServeurClient()
+    {
         connexionState = true;
     }
 
-    public void ConnectionVersTransportClient(TransportClient transportClient) {
+    public void ConnectionVersTransportClient(TransportClient transportClient)
+    {
         this.transportClient = transportClient;
     }
 
@@ -33,17 +35,20 @@ public class LiaisonServeurClient {
         this.transportServeur = transportServeur;
     }
 
-    public void receptionPaquet(String recuPaquet) {
-        String crc32 = recuPaquet.substring((recuPaquet.length() - 10), recuPaquet.length());
-        System.out.println(crc32);
+    public void receptionPaquet(String recuPaquet) throws IOException {
+        String crc32 = recuPaquet.substring((recuPaquet.length() - 10));
         String message = recuPaquet.substring(0, recuPaquet.length() - 10);
-        System.out.println(message);
+        //System.out.println(message);
+        //System.out.println(crc32);
+        //System.out.println(getCRC32Checksum(message.getBytes()));
         if (CRCComparaison(message, crc32)) {
-            System.out.println("LOL");
             transportServeur.getLiaisonCLient(recuPaquet);
+            QuoteServerThread.log("Verification CheckSum passer et envoie a la couche Transport Serveur");
 
         } else {
             //transportServeur.demandeRenvoie(recuPaquet);
+            QuoteServerThread.log("Verification CheckSum echouer");
+
         }
     }
 
@@ -66,11 +71,13 @@ public class LiaisonServeurClient {
      */
     public void envoieVersLiaisonServeur(String message,String[] address,int nbpaquet) throws IOException {
         envoyerPaquet = remplirPaquet(message);
+        QuoteServerThread.log("Paquet rempli avec CRC32");
+
         //System.out.println(envoyerPaquet);
         physique.EnvoiServeur(envoyerPaquet,address[0]);
-        QuoteServerThread.log("This is a test");
+        QuoteServerThread.log("Paquet pret a envoyer");
 
-            //TODO Envoie ack et Confirmation ack
+        //TODO Envoie ack et Confirmation ack
 
 
         //TODO Il manque le log
@@ -87,8 +94,15 @@ public class LiaisonServeurClient {
         return crc32.getValue();
     }
 
+    /**
+     * Il sert a comparer la valeur du message recu avec celle de sa valeur suppose
+     * @param donneesRecu Il s'agit du message
+     * @param crcRecu C'est le CRC32 du message
+     * @return
+     */
     public boolean CRCComparaison(String donneesRecu, String crcRecu) {
-        if (crcRecu.equals(getCRC32Checksum(donneesRecu.getBytes()))) {
+        if (!crcRecu.equals(getCRC32Checksum(donneesRecu.getBytes()))) {
+
             return true;
         }
         return false;

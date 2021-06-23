@@ -28,7 +28,7 @@ public class TransportServeur {
     public void demandeRenvoie(String paquetManquant)
     {
         String askAgain = paquetManquant.substring(0,11) + "1" + "Renvoyer le paquet";
-        //TODO Demander pour compr/hension
+
         liaisonServeurClient.answerClient(askAgain);
     }
 
@@ -36,15 +36,18 @@ public class TransportServeur {
     {
         if(paquetList[Integer.parseInt(paquetAccepted.substring(0,4))-1] == null)
             paquetList[Integer.parseInt(paquetAccepted.substring(0,4)) - 1] = paquetAccepted;
-            String ack = paquetAccepted.substring(0,11) + "$" + "Package received";
+            String ack = paquetAccepted.substring(0,11) + "0" + "Package received";
             liaisonServeurClient.answerClient(ack);
     }
 
     public void TraitementPaquetEnvoyer(String paquet)
     {
+
         int actualPaquet = Integer.parseInt(paquet.substring(0,4));
         if((actualPaquet - lastPaquet) == 1)
         {
+
+            //System.out.println(actualPaquet);
             accuserReception(paquet);
             lastPaquet = actualPaquet;
         }
@@ -77,9 +80,10 @@ public class TransportServeur {
 
     public void getLiaisonCLient(String paquet)
     {
-        paquetList = new String[Integer.parseInt(paquet.substring(4,8))];
-        if(Integer.parseInt(paquet.substring(11,12)) == 0)
+        System.out.println(paquet);
+        if(nbrdemande==1)
         {
+            paquetList = new String[Integer.parseInt(paquet.substring(4,8))];
             TraitementPaquetEnvoyer(paquet);
         }
         else

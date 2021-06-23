@@ -3,12 +3,20 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.SocketException;
+
 
 public class ApplicationClient {
 
     private TransportClient transportClient = new TransportClient();
+    private String nomFichier;
+    private String[] args;
 
+
+    public ApplicationClient(String nomFichier,String[] args) throws IOException {
+        this.nomFichier = nomFichier;
+        this.args = args;
+        envoieVersTransportClient(nomFichier,args);
+    }
 
     /**
      * Elle permet la connection de la couche d'application à la couche de transport. Par contre je sais pas si elle est vraiment utile.
@@ -26,8 +34,11 @@ public class ApplicationClient {
      */
     public void envoieVersTransportClient(String nomfichier, String[] args) throws IOException {
         String envoie = readFile(nomfichier,args);
+        QuoteServerThread.log("Fichier lu");
         ConnectionVersTransport(new TransportClient());
+        QuoteServerThread.log("Connection etabli");
         transportClient.EntetePaquet(envoie,nomfichier,args);
+        QuoteServerThread.log("Envoie vers TransportClient");
     }
 
     /**
@@ -36,11 +47,10 @@ public class ApplicationClient {
      * @param args
      * @return Elle retourne un String des phrases lues
      */
-    public String readFile(String filename, String[] args)
-    {
+    public String readFile(String filename, String[] args) throws IOException {
         if (args.length != 1) {
             System.out.println("Usage: java QuoteClient <hostname>");
-            return "";
+            return "Erreur";
         }
 
         StringBuilder records = new StringBuilder();
@@ -60,8 +70,18 @@ public class ApplicationClient {
         {
             System.err.format("Exception occurred trying to read '%s'.", filename);
             e.printStackTrace();
-            return "";
+            return "Erreur";
         }
+
+
     }
+
+    public String getNomFichier() {
+        return nomFichier;
+    }
+    public String[] getArgs() {
+        return args;
+    }
+
 
 }

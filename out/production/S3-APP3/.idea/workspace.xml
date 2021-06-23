@@ -3,12 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="6973dda6-356a-42b8-aa36-4484aebe5b14" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/com/company/ApplicationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/ApplicationClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/company/LiaisonClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/LiaisonClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/com/company/Physique.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/Physique.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/ApplicationServeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/ApplicationServeur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/LiaisonServeurClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/LiaisonServeurClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/com/company/QuoteClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/QuoteClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/com/company/TransportClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/TransportClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/S3-APP3/com/company/LiaisonClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/S3-APP3/com/company/LiaisonClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com/company/TransportServeur.java" beforeDir="false" afterPath="$PROJECT_DIR$/com/company/TransportServeur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liaisonDeDonnees.log" beforeDir="false" afterPath="$PROJECT_DIR$/liaisonDeDonnees.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/S3-APP3/com/company/LiaisonServeurClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/S3-APP3/com/company/LiaisonServeurClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/S3-APP3/com/company/TransportClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/S3-APP3/com/company/TransportClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/S3-APP3/com/company/TransportServeur.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/S3-APP3/com/company/TransportServeur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/S3-APP3/liaisonDeDonnees.log" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/S3-APP3/liaisonDeDonnees.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,13 +68,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -96,7 +102,8 @@
       <workItem from="1624224677116" duration="15000" />
       <workItem from="1624225524830" duration="3050000" />
       <workItem from="1624281398416" duration="34366000" />
-      <workItem from="1624366350747" duration="4832000" />
+      <workItem from="1624366350747" duration="20180000" />
+      <workItem from="1624412731152" duration="1565000" />
     </task>
     <servers />
   </component>
